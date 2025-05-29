@@ -1,8 +1,8 @@
 # Lantern
-Lantern is a performant and self-hosted problemset archival and retrieval tool written in Go that supports Leetcode and Codeforces problemsets.
+Lantern is a lightweight, high performance and self-hosted solution archival tool written in Go that supports Leetcode and Codeforces problem sets.
 
 ## Running
-a. Pre-requisites: Go v1.23.4, air
+a. Pre-requisites: Go v1.24.3, air
 1. Clone the repo.
 `git clone https://github.com/ab1nv/lantern`
 2. Run using air.

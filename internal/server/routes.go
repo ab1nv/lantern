@@ -3,10 +3,15 @@ package server
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/ab1nv/lantern/routes"
+	"github.com/go-chi/chi/v5"
 )
 
-func registerRoutes(mux *http.ServeMux, baseDir string) {
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+func registerRoutes(r chi.Router, baseDir string) {
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Lantern is running! Watching directory: %s", baseDir)
 	})
+
+	routes.RegisterQuestionRoutes(r)
 }
