@@ -1,5 +1,10 @@
 # Dev
 cleanup
 _commands
-
-tmp/
+*_templ.go
+*_templ.txt
+.DS_Store
+bin
+node_modules
+tmp
+.env
