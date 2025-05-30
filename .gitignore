@@ -1,4 +1,3 @@
-# Dev
 cleanup
 _commands
 *_templ.go
@@ -8,3 +7,4 @@ bin
 node_modules
 tmp
 .env
+output.css

@@ -4,7 +4,10 @@ WORKDIR /app
 
 RUN go install github.com/air-verse/air@latest
 
-COPY go.mod ./
+COPY . .
+
 RUN go mod download
+
+EXPOSE 7331
 
 CMD ["air", "-c", ".air.toml"]

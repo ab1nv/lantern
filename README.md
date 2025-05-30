@@ -1,4 +1,6 @@
 # Lantern
+### 🚧 Project is under development and not ready for use.
+
 Lantern is a lightweight, high performance and self-hosted solution archival tool written in Go that supports Leetcode and Codeforces problem sets.
 
 ## Running

@@ -1,37 +1,43 @@
-# Build-Stage
+# Stage 1: Build
 FROM golang:1.24-alpine AS build
+
 WORKDIR /app
 
-# Copy the source code
+# Install system dependencies
+RUN apk add --no-cache git nodejs npm
+
+# Install templ and air
+RUN go install github.com/a-h/templ/cmd/templ@latest
+RUN go install github.com/air-verse/air@latest
+
+# Install TailwindCSS globally via npm
+RUN npm install -g tailwindcss
+
+# Copy source
 COPY . .
 
-# Install templ
-RUN go install github.com/a-h/templ/cmd/templ@latest
+# Download Go dependencies
+RUN go mod tidy
 
 # Generate templ files
 RUN templ generate
 
-# Install build dependencies
-RUN apk add --no-cache gcc musl-dev
+# Stage 2: Runtime
+FROM golang:1.24-alpine
 
-# Build the application
-RUN CGO_ENABLED=1 GOOS=linux go build -o main ./main.go
-
-# Deploy-Stage
-FROM alpine:3.20.2
 WORKDIR /app
 
-# Install ca-certificates
-RUN apk add --no-cache ca-certificates
+# Copy binaries from build stage
+COPY --from=build /go/bin/* /usr/local/bin/
+COPY --from=build /app /app
 
-# Set environment variable for runtime
-ENV GO_ENV=production
+# Install runtime dependencies
+RUN apk add --no-cache nodejs npm
+RUN npm install -g tailwindcss
 
-# Copy the binary from the build stage
-COPY --from=build /app/main .
+# Permission for entry script
+RUN chmod +x ./client/entry.sh
 
-# Expose the port your application runs on
 EXPOSE 8090
 
-# Command to run the application
-CMD ["./main"]
+CMD ["./client/entry.sh"]
