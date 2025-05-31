@@ -8,3 +8,6 @@ node_modules
 tmp
 .env
 output.css
+*.todo
+
+lantern-config.json

@@ -1,0 +1,17 @@
+{
+    "BUILD_SETTINGS": {
+        "BACKEND_PORT": 8080,
+        "FRONTEND_PORT": 8090
+    },
+    "GENERAL_SETTINGS": {
+        "LANGUAGE": "en_IN",
+        "THEME": "light",
+        "DIRECTORY": ""
+    },
+    "LEETCODE_SETTINGS": {
+        "NAME": ""
+    },
+    "CODEFORCES_SETTINGS": {
+        "NAME": ""
+    }
+}

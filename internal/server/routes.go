@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/ab1nv/lantern/routes"
+	routes "github.com/ab1nv/lantern/internal/routes/question"
 	"github.com/go-chi/chi/v5"
 )
 

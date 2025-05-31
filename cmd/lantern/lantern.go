@@ -1,4 +1,4 @@
-// Copyright (C) 2025-present Abhinav SinghAdd commentMore actions
+// Copyright (C) 2025-present Abhinav Singh
 // This program is free software under the GNU AGPLv3.
 // See <https://www.gnu.org/licenses/> for details.
 
@@ -11,14 +11,22 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/ab1nv/lantern/config"
 	"github.com/ab1nv/lantern/internal/server"
 )
 
 func main() {
-	dir := flag.String("dir", "problemset", "Directory to watch or create")
+	// Load config first
+	err := config.LoadConfig("lantern-config.json")
+	if err != nil {
+		log.Fatalf("Failed to load config: %v", err)
+	}
+
+	// Now config.AppConfig is ready to use
+	dir := config.AppConfig.GeneralSettings.Directory
 	flag.Parse()
 
-	absPath, err := filepath.Abs(*dir)
+	absPath, err := filepath.Abs(dir)
 	if err != nil {
 		log.Fatalf("Error resolving directory path: %v", err)
 	}

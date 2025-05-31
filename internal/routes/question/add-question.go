@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/ab1nv/lantern/core"
+	inturl "github.com/ab1nv/lantern/internal/url"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -20,7 +20,7 @@ func AddQuestionHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	normalized, err := core.NormalizeURL(urlParam)
+	normalized, err := inturl.NormalizeURL(urlParam)
 	if err != nil {
 		http.Error(w, "Invalid URL: "+err.Error(), http.StatusBadRequest)
 		return
@@ -29,9 +29,9 @@ func AddQuestionHandler(w http.ResponseWriter, r *http.Request) {
 	var resp interface{}
 	switch {
 	case normalizedContains(normalized, "leetcode.com"):
-		resp, err = core.ProcessLeetCode(normalized)
+		resp, err = inturl.ProcessLeetCode(normalized, "problemset", ".py")
 	case normalizedContains(normalized, "codeforces.com"):
-		resp, err = core.ProcessCodeforces(normalized)
+		resp, err = inturl.ProcessCodeforces(normalized)
 	default:
 		http.Error(w, "Unsupported platform", http.StatusBadRequest)
 		return
@@ -46,7 +46,6 @@ func AddQuestionHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(resp)
 }
 
-// Helper to reduce boilerplate
 func normalizedContains(u, needle string) bool {
 	return strings.Contains(strings.ToLower(u), needle)
 }
