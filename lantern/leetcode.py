@@ -92,12 +92,14 @@ class Leetcode:
             Logger.log("ERROR", "Failed to fetch problem metadata.")
             return
 
-        folder_name = f"{metadata['question_id']}_{metadata['question_slug']}"
+        slug = metadata["question_slug"]
+        snake_case_slug = re.sub(r"[\W_]+", "_", slug).lower()
 
+        folder_name = f"{metadata['question_id']}_{snake_case_slug}"
         base_path_for_problem = os.path.join(base_path, "problemset", folder_name)
 
-        solution_file = f"{metadata['question_slug']}.py"
-        test_file = f"test_{metadata['question_slug']}.py"
+        solution_file = f"{snake_case_slug}.py"
+        test_file = f"test_{snake_case_slug}.py"
         readme_file = "README.md"
 
         IO.create_dirs(folder_name, os.path.join(base_path, "problemset"))
