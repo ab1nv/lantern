@@ -1,4 +1,5 @@
 import os
+import sys
 from lantern.logger import Logger
 from lantern import config
 
@@ -19,7 +20,7 @@ class Index:
     def check_index(cls) -> None:
         if not os.path.isfile(cls.readme_path):
             Logger.log("ERROR", f"README.md was not found at {cls.readme_path}")
-            return
+            sys.exit(0)
         Logger.log("OK", f"Found index at {cls.readme_path}")
 
     @classmethod
