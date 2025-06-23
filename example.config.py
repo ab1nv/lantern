@@ -1,4 +1,3 @@
 AUTHOR = ""
 EMAIL = ""
-TIMEZONE = ""
 PATH = ""

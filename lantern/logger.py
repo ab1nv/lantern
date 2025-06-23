@@ -1,10 +1,11 @@
-from colorama import Fore
 from typing import Literal
+
+from colorama import Fore
 
 
 class Logger:
     _ERROR = Fore.RED + "[ERROR] "
-    _OK = Fore.GREEN + "[OK] "
+    _OK = Fore.GREEN
 
     @classmethod
     def log(cls, log_type: Literal["ERROR", "OK"], message: str) -> None:

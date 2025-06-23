@@ -1,7 +1,8 @@
-import aiohttp
-import subprocess
 import os
+import subprocess
 import sys
+
+import aiohttp
 
 from lantern.logger import Logger
 
@@ -15,10 +16,12 @@ def get_local_version() -> str:
     try:
         with open(LOCAL_VERSION_PATH, "r", encoding="utf-8") as f:
             version = f.read().strip()
-            Logger.log("OK", f"Local version: {version}")
             return version
     except FileNotFoundError:
-        Logger.log("ERROR", f"VERSION file not found at {LOCAL_VERSION_PATH}")
+        Logger.log(
+            "ERROR",
+            f"VERSION file not found at {LOCAL_VERSION_PATH}. Lantern cannot check updates without this file.",
+        )
         return "0.0.0"
     except Exception as e:
         Logger.log("ERROR", f"Error reading VERSION file: {e}")
@@ -31,7 +34,6 @@ async def fetch_remote_version():
             async with session.get(GITHUB_VERSION_URL) as resp:
                 if resp.status == 200:
                     text = (await resp.text()).strip()
-                    Logger.log("OK", f"Remote version: {text}")
                     return text
                 else:
                     Logger.log(
@@ -56,13 +58,12 @@ async def check_for_updates() -> bool:
         return False
 
     if is_newer(remote, local):
-        Logger.log("ERROR", f"New version available: {remote} (local: {local})")
+        Logger.log("OK", f"New version available: {remote} (local: {local})")
         choice = input("Do you want to update? [Y/n] ").strip().lower()
         if choice in ("", "y", "yes"):
             await perform_update()
         return True
     else:
-        Logger.log("OK", f"You are using the latest version: {local}")
         return False
 
 

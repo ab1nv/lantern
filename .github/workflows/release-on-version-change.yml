@@ -1,0 +1,42 @@
+name: Release on Version Change
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'VERSION'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Read version from file
+      id: get_version
+      run: |
+        version=$(cat VERSION | tr -d ' \t\n\r')
+        echo "version=$version" >> $GITHUB_OUTPUT
+
+    - name: Generate release assets (zip and tar.gz)
+      run: |
+        mkdir release
+        zip -r release/lantern.zip . -x '*.git*' -x 'release/*'
+        tar --exclude='./release' --exclude='./.git' -czf release/lantern.tar.gz .
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v${{ steps.get_version.outputs.version }}
+        name: Release v${{ steps.get_version.outputs.version }}
+        body_path: CHANGELOG.md
+        files: |
+          release/lantern.zip
+          release/lantern.tar.gz
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,12 +1,14 @@
-import re
 import os
+import re
 from datetime import datetime
+
 import aiohttp
+
+from lantern import config
+from lantern.index import Index
+from lantern.io import IO
 from lantern.logger import Logger
 from lantern.metadata import Metadata
-from lantern.index import Index
-from lantern import config
-from lantern.io import IO
 
 base_path = os.path.abspath(config.PATH)
 
@@ -24,7 +26,6 @@ class Leetcode:
     def extract_question_slug(self, url: str) -> str | None:
         match = re.search(r"problems/([^/]+)", url)
         if match:
-            Logger.log("OK", f"Extracted question slug: {match.group(1)}")
             return match.group(1)
         Logger.log("ERROR", "Could not extract slug from URL.")
         return None
@@ -62,7 +63,6 @@ class Leetcode:
                     return None
 
                 question = data["data"]["question"]
-                Logger.log("OK", f"Fetched metadata for '{question_slug}'")
                 return {
                     "question_id": question["questionFrontendId"],
                     "question_title": question["title"],
@@ -107,8 +107,9 @@ class Leetcode:
         IO.create_files(test_file, base_path_for_problem)
         IO.create_files(readme_file, base_path_for_problem)
 
-        current_time = datetime.now().strftime("%d/%m/%Y %H:%M:%S IST")
-        metadata_block = f"""Question: {metadata["question_title"]}
+        current_time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        metadata_block = f"""Author: {config.AUTHOR} <{config.EMAIL}>
+Question: {metadata["question_title"]}
 Solved On: {current_time}"""
 
         Metadata.insert_metadata(

@@ -1,9 +1,9 @@
-from lantern.leetcode import Leetcode
 from lantern.index import Index
+from lantern.leetcode import Leetcode
 from lantern.logger import Logger
 
 
-async def start():
+async def start() -> None:
     Index.check_index()
 
     url = input("Enter Question URL: ").strip()
