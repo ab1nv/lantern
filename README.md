@@ -10,7 +10,8 @@ Also, you need to have [uv]((https://docs.astral.sh/uv/getting-started/installat
 ```
 git clone https://github.com/ab1nv/lantern.git
 cd lantern
-uv pip install -e
+uv venv
+uv pip install -e .
 ```
 there you go, lantern is installed! 🎉
 
