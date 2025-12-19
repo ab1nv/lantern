@@ -1,4 +1,3 @@
-import pytest
 
 from lantern.utils import (
     extract_question_slug,
