@@ -1,20 +1,7 @@
 [project]
 name = "lantern"
-version = "0.1.0"
-description = "LeetCode and Codeforces automation CLI tool"
-authors = [{ name = "Abhinav Singh" }]
-dependencies = [
-    "uvloop",
-    "aiohttp",
-    "colorama",
-    "isort>=6.0.1",
-]
+version = "2.0.1"
+description = "A handy terminal user interface (TUI) to manage leetcode solution indexes."
 readme = "README.md"
-requires-python = ">=3.12"
-
-[project.scripts]
-lantern = "lantern.main:main"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires-python = ">=3.13"
+dependencies = []
