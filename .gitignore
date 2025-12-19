@@ -1,2 +1,4 @@
 __pycache__/
 .venv/
+arx/
+.pytest_cache/
