@@ -21,7 +21,7 @@ there you go, lantern is installed! 🎉
 
 ## Planned Features
 
-- [ ] Java Support
+- [x] Java Support
 - [ ] Stats (Total Questions Solved, Language Stats, etc.)
 - [ ] Test Runner (currently in development.)
 - [ ] Video instruction for installing and running the tool.
